@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../DataBase"); // Import DB connection
+const sequelize = require("../DataBase"); 
 
 const Etudiant = sequelize.define("Students", {
   id: {
