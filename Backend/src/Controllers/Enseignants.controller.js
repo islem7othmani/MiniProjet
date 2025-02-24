@@ -34,25 +34,25 @@ exports.getProfById = (req, res) => {
 }; 
    
 //create a Prof
-exports.createProf = (req, res) => {
-    const { nom, prenom, email, date_naissance, nombre_fois,specialite } = req.body;
-    const sql = "INSERT INTO professors (nom, prenom, email, date_naissance,nombre_fois,specialite) VALUES (?,?, ?, ?, ?, ?)";
-    db.query(sql, [nom, prenom, email, date_naissance, nombre_fois,specialite], (err, result) => {
+exports.createProf = async (req, res) => {
+  const { nom, prenom, email,telephone,password, date_naissance, nombre_fois,specialite } = req.body;
+    const sql = "INSERT INTO professors (nom, prenom, email,telephone,password, date_naissance,nombre_fois,specialite) VALUES (?,?, ?, ?, ?, ?,?,?)";
+    db.query(sql, [nom, prenom, email,telephone,await bcrypt.hash(password, 10), date_naissance, nombre_fois,specialite], (err, result) => {
       if (err) {
         console.error("Error adding prof:", err);
         return res.status(500).json({ error: "Internal Server Error" });
       }
-      res.status(201).json({ id: result.insertId, nom, prenom, email, date_naissance, nombre_fois,specialite });
+      res.status(201).json({ id: result.insertId, nom, prenom, email,telephone, date_naissance, nombre_fois,specialite });
     });
   };
 
 //update prof
-exports.updateProf = (req, res) => {
+exports.updateProf = async(req, res) => {
   const { id } = req.params;
-  const { nom, prenom, email, date_naissance, nombre_fois,specialite } = req.body;
-  const sql = "UPDATE professors SET nom = ?, prenom = ?, email = ?, date_naissance = ?, nombre_fois = ? , specialite=? WHERE id = ?";
+  const { nom, prenom, email,telephone,password, date_naissance, nombre_fois,specialite } = req.body;
+  const sql = "UPDATE professors SET nom = ?, prenom = ?, email = ?,telephone=?,password=?, date_naissance = ?, nombre_fois = ? , specialite=? WHERE id = ?";
 
-  db.query(sql, [nom, prenom, email, date_naissance, nombre_fois,specialite, id], (err, result) => {
+  db.query(sql, [nom, prenom, email,telephone,await bcrypt.hash(password, 10), date_naissance, nombre_fois,specialite, id], (err, result) => {
     if (err) {
       console.error("Error updating prof:", err);
       return res.status(500).json({ error: "Internal Server Error" });
