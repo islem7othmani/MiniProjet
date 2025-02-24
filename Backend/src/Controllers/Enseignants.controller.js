@@ -1,4 +1,6 @@
 const db = require("../DataBase");
+const bcrypt = require("bcrypt");
+
 
 //get all profs
 exports.getAllProfessors = (req, res) => {
@@ -83,3 +85,68 @@ exports.deleteProf = (req, res) => {
     res.status(200).json({ message: "Prof deleted successfully" });
   });
 };
+
+exports.createMultipleProfessors = async (req, res) => {
+  const professors = req.body;  
+
+  if (!Array.isArray(professors) || professors.length === 0) {
+      return res.status(400).json({ error: "Invalid data format" });
+  }
+
+  try {
+      // Hash passwords before inserting
+      const professorsWithHashedPasswords = await Promise.all(
+          professors.map(async (prof) => ({
+              ...prof,
+              password: await bcrypt.hash(prof.password, 10) // rounds = 10
+          }))
+      );
+
+      const values = professorsWithHashedPasswords.map(prof => [
+          prof.id, prof.nom, prof.prenom,prof.email,
+          prof.date_naissance, prof.nombre_fois,prof.specialite, 
+          prof.telephone, prof.password
+             
+      ]);
+
+      const sql = `INSERT INTO professors 
+                  (id, nom, prenom, email,date_naissance, nombre_fois, specialite, telephone, password) 
+                  VALUES ?`;
+
+      db.query(sql, [values], (err, result) => {
+          if (err) {
+              console.error("Error inserting professors:", err);
+              return res.status(500).json({ error: "Internal Server Error" });
+          }
+          res.status(201).json({ message: "Professors added successfully", inserted: result.affectedRows });
+      });
+  } catch (error) {
+      console.error("Error processing professors:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+/*structure of req.body: exp:
+[
+  {
+    "nom": "Doe",
+    "prenom": "John",
+    "email": "johndoe@example.com",
+    "telephone": "123456789",
+    "password": "0000",
+    "date_naissance": "1980-05-20",
+    "nombre_fois": 16,
+    "specialite": "Mathematics"
+  },
+  {
+    "nom": "Smith",
+    "prenom": "Jane",
+    "email": "janesmith@example.com",
+    "telephone": "987654321",
+    "password": "1234",
+    "date_naissance": "1985-09-15",
+    "nombre_fois": 12,
+    "specialite": "Physics"
+  }
+]
+
+*/ 

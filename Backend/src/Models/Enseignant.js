@@ -27,6 +27,14 @@ const Enseignant = sequelize.define("Professors", {
     type: DataTypes.DATE,
     allowNull: false,
   },
+  telephone: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   nombre_fois: {
     type: DataTypes.INTEGER,
     allowNull: true,
@@ -37,7 +45,11 @@ const Enseignant = sequelize.define("Professors", {
   },
 }, {
   tableName: "enseignants",
-  timestamps: false, 
+  timestamps: true, // Enables createdAt & updatedAt
+  createdAt: "created_at",  
+  updatedAt: "updated_at"
 });
 
 module.exports = Enseignant;
+
+
