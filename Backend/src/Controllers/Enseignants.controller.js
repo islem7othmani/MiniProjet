@@ -125,7 +125,8 @@ exports.createMultipleProfessors = async (req, res) => {
       res.status(500).json({ error: "Internal Server Error" });
   }
 };
-/*structure of req.body: exp:
+/*structure of req.body: 
+exemple ntab3ou 3lih
 [
   {
     "nom": "Doe",
