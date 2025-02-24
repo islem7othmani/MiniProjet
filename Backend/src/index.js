@@ -27,6 +27,9 @@ app.use(bodyParser.json());
 const etudiantRoutes = require('./Routes/Etudiant.route');
 app.use('/student', etudiantRoutes);
 
+const enseignantRoutes = require('./Routes/Enseignant.route');
+app.use('/prof', enseignantRoutes);
+
 
 
 
