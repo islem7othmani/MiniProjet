@@ -30,6 +30,9 @@ app.use('/student', etudiantRoutes);
 const enseignantRoutes = require('./Routes/Enseignant.route');
 app.use('/prof', enseignantRoutes);
 
+const ProjetRoutes = require('./Routes/Projet.route');
+app.use('/Projet', ProjetRoutes);
+
 
 
 
