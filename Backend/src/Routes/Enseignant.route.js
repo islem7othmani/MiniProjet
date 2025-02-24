@@ -8,5 +8,8 @@ router.get("/allProfessors", enseignantController.getAllProfessors);
 router.get("/profById/:id", enseignantController.getProfById);
 router.put("/updateProf/:id", enseignantController.updateProf);
 router.delete("/deleteProf/:id", enseignantController.deleteProf);
+router.post("/addProfessors", enseignantController.createMultipleProfessors);
+
 
 module.exports = router;
+
