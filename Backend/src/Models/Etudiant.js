@@ -41,30 +41,9 @@ const Etudiant = sequelize.define("Students", {
   },
 }, {
   tableName: "students",
-  timestamps: true, // Enables createdAt & updatedAt
+  timestamps: true, 
   createdAt: "created_at",  
   updatedAt: "updated_at" 
 });
 
 module.exports = Etudiant;
-
-/* zid hadhi fel base de données
-ALTER TABLE students 
-ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-ADD COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
-
-
-ALTER TABLE professors 
-ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-ADD COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
-
-
-ALTER TABLE students ADD COLUMN password VARCHAR(255) NOT NULL;
-ALTER TABLE professors ADD COLUMN password VARCHAR(255) NOT NULL;
-
-
-ALTER TABLE students ADD COLUMN telephone VARCHAR(255) NOT NULL;
-ALTER TABLE professors ADD COLUMN telephone VARCHAR(255) NOT NULL;
-
-w tansech: npm install bcrypt
-*/ 
