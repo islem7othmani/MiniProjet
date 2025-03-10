@@ -3,9 +3,9 @@ const db = require("../DataBase");
 // Get all projects with student details
 exports.getAllProjets = (req, res) => {
     const sql = `
-        SELECT projet.*, students.nom, students.prenom, students.email
-        FROM projet 
-        INNER JOIN students ON projet.etudiantId = students.id
+        SELECT projets.*, students.nom, students.prenom, students.email
+        FROM projets 
+        INNER JOIN students ON projets.etudiantId = students.id
     `;
     db.query(sql, (err, results) => {
         if (err) {
@@ -20,10 +20,10 @@ exports.getAllProjets = (req, res) => {
 exports.getProjetById = (req, res) => {
     const { id } = req.params;
     const sql = `
-        SELECT projet.*, students.nom, students.prenom, students.email
-        FROM projet 
-        INNER JOIN students ON projet.etudiantId = students.id
-        WHERE projet.id = ?
+        SELECT projets.*, students.nom, students.prenom, students.email
+        FROM projets 
+        INNER JOIN students ON projets.etudiantId = students.id
+        WHERE projets.id = ?
     `;
 
     db.query(sql, [id], (err, result) => {
@@ -44,7 +44,7 @@ exports.getProjetById = (req, res) => {
 exports.createProjet = (req, res) => {
     const { title, description, status, depot, etudiantId } = req.body;
     const sql = `
-        INSERT INTO projet (title, description, status, depot, etudiantId)
+        INSERT INTO projets (title, description, status, depot, etudiantId)
         VALUES (?, ?, ?, ?, ?)
     `;
 
@@ -63,7 +63,7 @@ exports.updateProjet = (req, res) => {
     const { title, description, status, depot, etudiantId } = req.body;
     
     const sql = `
-        UPDATE projet 
+        UPDATE projets 
         SET title = ?, description = ?, status = ?, depot = ?, etudiantId = ?
         WHERE id = ?
     `;
@@ -85,7 +85,7 @@ exports.updateProjet = (req, res) => {
 // Delete a project
 exports.deleteProjet = (req, res) => {
     const { id } = req.params;
-    const sql = "DELETE FROM projet WHERE id = ?";
+    const sql = "DELETE FROM projets WHERE id = ?";
 
     db.query(sql, [id], (err, result) => {
         if (err) {

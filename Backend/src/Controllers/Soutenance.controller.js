@@ -2,9 +2,9 @@ const db = require("../DataBase");
 
 exports.getAllSoutenances = (req, res) => {
     const sql = `
-        SELECT soutenance.*, projets.title, projets.depot, projets.description, projets.status
-        FROM soutenance 
-        INNER JOIN projets ON soutenance.projetId= projet.id
+        SELECT soutenances.*, projets.title, projets.depot, projets.description, projets.status
+        FROM soutenances
+        INNER JOIN projets ON soutenances.projetId= projets.id
     `;
     db.query(sql, (err, results) => {
         if (err) {
@@ -19,10 +19,10 @@ exports.getAllSoutenances = (req, res) => {
 exports.getSoutenanceById = (req, res) => {
     const { id } = req.params;
     const sql = `
-        SELECT soutenance.*, projets.title, projets.depot, projets.description, projets.status
-        FROM soutenance 
-        INNER JOIN projets ON soutenance.projetId= projet.id
-        WHERE soutenance.id_s = ?
+        SELECT soutenances.*, projets.title, projets.depot, projets.description, projets.status
+        FROM soutenances 
+        INNER JOIN projets ON soutenances.projetId= projets.id
+        WHERE soutenances.id_s = ?
     `;
 
     db.query(sql, [id], (err, result) => {
@@ -39,15 +39,14 @@ exports.getSoutenanceById = (req, res) => {
     });
 };
 
-// Create a project linked to a student
 exports.createSoutenance = (req, res) => {
     const { result_soutenance, time_soutenance, date_soutenance, note, projetId } = req.body;
     const sql = `
-        INSERT INTO projet (result_soutenance, time_soutenance, date_soutenance, note, projetId)
+        INSERT INTO soutenances (result_soutenance, time_soutenance, date_soutenance, note, projetId)
         VALUES (?, ?, ?, ?, ?)
     `;
 
-    db.query(sql, [title, description, status, depot, etudiantId], (err, result) => {
+    db.query(sql, [result_soutenance, time_soutenance, date_soutenance, note, projetId], (err, result) => {
         if (err) {
             console.error("Error adding soutenance:", err);
             return res.status(500).json({ error: "Internal Server Error" });
@@ -61,7 +60,7 @@ exports.updateSoutenance = (req, res) => {
     const { result_soutenance, time_soutenance, date_soutenance, note, projetId } = req.body;
     
     const sql = `
-        UPDATE soutenance 
+        UPDATE soutenances 
         SET result_soutenance=?, time_soutenance=?, date_soutenance=?, note=?, projetId=?
         WHERE id_s = ?
     `;
@@ -82,7 +81,7 @@ exports.updateSoutenance = (req, res) => {
 
 exports.deleteSoutenance = (req, res) => {
     const { id } = req.params;
-    const sql = "DELETE FROM soutenance WHERE id_s = ?";
+    const sql = "DELETE FROM soutenances WHERE id_s = ?";
 
     db.query(sql, [id], (err, result) => {
         if (err) {
