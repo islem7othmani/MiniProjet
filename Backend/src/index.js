@@ -36,6 +36,11 @@ app.use('/projet', ProjetRoutes);
 const SoutenanceRoutes = require('./Routes/Soutenance.route');
 app.use('/soutenance', SoutenanceRoutes);
 
+const DispRoutes = require("./Routes/Disponibilitie.route");
+app.use('/disp', DispRoutes);
+
+
+
 
 
 // Test MySQL connection when server starts
