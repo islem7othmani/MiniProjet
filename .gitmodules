@@ -1,0 +1,3 @@
+[submodule "Backend/etudiantFront"]
+	path = Backend/etudiantFront
+	url = https://github.com/MaryemMt/etudiantFront.git
