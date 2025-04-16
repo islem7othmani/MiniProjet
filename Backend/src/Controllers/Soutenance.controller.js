@@ -129,3 +129,21 @@ exports.updateSoutenance = (req, res) => {
     });
 };
 
+exports.getSoutenanceByStudentId = (req, res) => {
+    const { id } = req.params; 
+
+    const sql = `
+        SELECT * from soutenances, students, projets,professors p1, professors p2, professors p3
+        where soutenances.studentId = students.id and projets.id = soutenances.projetId and p1.id = soutenances.presidentId and p2.id = soutenances.rapporteurId and p3.id = soutenances.encadrantId  and students.id = ?
+    `;
+
+    db.query(sql, [id], (err, results) => {
+        if (err) {
+            console.error("Error fetching soutenance by student ID:", err);
+            return res.status(500).json({ error: "Internal Server Error" });
+        }
+
+
+        res.json(results); // or res.json(results) if multiple soutenances per student
+    });
+};
