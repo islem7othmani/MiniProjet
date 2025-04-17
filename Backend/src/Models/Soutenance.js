@@ -44,6 +44,6 @@ const Soutenance = sequelize.define("Soutenance", {
 // Define the relationship
 Projet.hasMany(Soutenance, { foreignKey: "projetId", as: "soutenances" }); 
 
-//Projet.belongsTo(Etudiant, { foreignKey: "etudiantId", as: "etudiant" });
+//                                    Projet.belongsTo(Etudiant, { foreignKey: "etudiantId", as: "etudiant" });
 
 module.exports = Soutenance;
