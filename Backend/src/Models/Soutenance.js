@@ -1,3 +1,4 @@
+
 const { DataTypes } = require("sequelize");
 const sequelize = require("../DataBase");
 const projet = require("./Projet"); // Import the project model
@@ -17,7 +18,7 @@ const Soutenance = sequelize.define("Soutenance", {
     type: DataTypes.TIME,
     allowNull: false,
   },
-  date_soutenance: {  
+  date_soutenance: {
     type: DataTypes.DATE,
     allowNull: false,
   },
@@ -25,19 +26,55 @@ const Soutenance = sequelize.define("Soutenance", {
     type: DataTypes.DOUBLE,
     allowNull: false,
   },
-  projetId: { // Foreign key for the student
+  projetId: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: "projects", // Table name of Etudiant model
+      model: "projets",
       key: "id",
     },
-    onDelete: "CASCADE", // If a student is deleted, their projects will be deleted
+    onDelete: "CASCADE",
   },
+  presidentId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: "professors",
+      key: "id",
+    },
+    onDelete: "CASCADE",
+  },
+  rapporteurId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: "professors",
+      key: "id",
+    },
+    onDelete: "CASCADE",
+  },
+  encadrantId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: "professors",
+      key: "id",
+    },
+    onDelete: "CASCADE",
+  },
+  studentId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: "students",
+      key: "id",
+    },
+    onDelete: "CASCADE",
+  }
 }, {
-  tableName: "soutenances",  
-  timestamps: true, 
-  createdAt: "created_at",  
+  tableName: "soutenances",
+  timestamps: true,
+  createdAt: "created_at",
   updatedAt: "updated_at"
 });
 
@@ -47,3 +84,4 @@ Projet.hasMany(Soutenance, { foreignKey: "projetId", as: "soutenances" });
 //                                    Projet.belongsTo(Etudiant, { foreignKey: "etudiantId", as: "etudiant" });
 
 module.exports = Soutenance;
+

@@ -24,6 +24,10 @@ const Projet = sequelize.define("Projet", {
     type: DataTypes.DATE,
     allowNull: false,
   },
+  pdf: {
+    type: DataTypes.STRING, // This will store the file path or URL
+    allowNull: true,
+  },
   etudiantId: { // Foreign key for the student
     type: DataTypes.INTEGER,
     allowNull: false,

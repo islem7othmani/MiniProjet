@@ -9,13 +9,11 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    credentials: true,
-  })
-);
+
+app.use(cors({
+  origin: "http://localhost:3000", // your React frontend URL
+}));
+
 
 app.use(bodyParser.json());
 
@@ -35,6 +33,11 @@ app.use('/projet', ProjetRoutes);
 
 const SoutenanceRoutes = require('./Routes/Soutenance.route');
 app.use('/soutenance', SoutenanceRoutes);
+
+const DispRoutes = require("./Routes/Disponibilitie.route");
+app.use('/disp', DispRoutes);
+
+
 
 
 

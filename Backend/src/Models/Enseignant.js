@@ -1,4 +1,5 @@
 const { DataTypes } = require("sequelize");
+
 const sequelize = require("../DataBase"); 
 
 const Enseignant = sequelize.define("Professors", {
@@ -44,12 +45,10 @@ const Enseignant = sequelize.define("Professors", {
     allowNull: true,
   },
 }, {
-  tableName: "enseignants",
+  tableName: "professors",
   timestamps: true, // Enables createdAt & updatedAt
   createdAt: "created_at",  
   updatedAt: "updated_at"
 });
 
 module.exports = Enseignant;
-
-
